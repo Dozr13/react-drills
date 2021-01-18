@@ -1,26 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
+class App extends Component {
+  constructor() {
+    super()
+
+    this.state = {
+      inputCopy: '',
+      listItem: ['spaghetti', 'ice cream', 'sushi', 'bologna', 'cheese']
+    }
+  }
+
+  updateText(val) {
+    this.setState({ inputCopy: val })
+  }
+
+  render() {
+    let filteredArr = this.state.listItem.filter( (el) => {
+      return el.includes( this.state.inputCopy )
+    }).map( ( el, i ) => {
+      return <h2 key={ i }> { el } </h2>
+    })
+
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input onChange={ ( e ) => this.updateText(e.target.value)} type="text" />
+      { filteredArr }
     </div>
-  );
+    );
+  }
 }
 
 export default App;
